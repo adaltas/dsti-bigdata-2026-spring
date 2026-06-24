@@ -1,1 +1,1 @@
-# dsti-bigdata-2026-fall
+# dsti-bigdata-2026-spring
