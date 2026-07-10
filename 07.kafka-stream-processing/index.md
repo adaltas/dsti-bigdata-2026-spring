@@ -113,31 +113,31 @@ Let's look at the examples for each of them.
 
 1. **What** results are calculated? → **Aggregation**
 
-    e.g. sum by key
+   e.g. sum by key
 
-    ![Aggregation](./assets/img-3.gif)
+   ![Aggregation](./assets/img-3.gif)
 
-2. **When** in event time are results are calculated? → **Windows**
+2. **Where** in event time are results are calculated? → **Windows**
 
-    e.g. fixed window of 1 hour
+   e.g. fixed window of 1 hour
 
-    ![Windows](./assets/img-4.gif)
+   ![Windows](./assets/img-4.gif)
 
 3. **When** in processing time are results materialized? → **Triggers**
 
-    e.g. every 10 min in processing time if new element(s)
+   e.g. every 10 min in processing time if new element(s)
 
-    ![Triggers](./assets/img-6.gif)
+   ![Triggers](./assets/img-6.gif)
 
-    - Triggers = watermark, processing time, count...
+   - Triggers = watermark, processing time, count...
 
 4. **How** do refinements of results relate?
 
-    Multiple results for a window:
+   Multiple results for a window:
 
-    - Discarding: send each result separately
-    - Accumulating: send the aggregated result every time
-    - Both(Accumulating & Retracting): send aggregate result + retract message
+   - Discarding: send each result separately
+   - Accumulating: send the aggregated result every time
+   - Both(Accumulating & Retracting): send aggregate result + retract message
 
 ## Stream processing engines
 
