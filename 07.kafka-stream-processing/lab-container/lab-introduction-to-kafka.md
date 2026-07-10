@@ -46,3 +46,6 @@ Launch a container to consume the topic `demo-nyc-taxi-fare` to see the consumin
    docker run --rm -it --network lab-kafka-net apache/kafka:4.1.1 \
      /opt/kafka/bin/<TODO>
    ```
+
+2. Extend the compose file with a consumer service that continuously
+   processes this stream. For example, a processing consumer using Python service that consumes the stream and applies some logic (filtering, enrichment, aggregation), logging the results. (Advanced)
