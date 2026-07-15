@@ -21,20 +21,20 @@ duration: 1h
 
 1. Use the "ConsumeKafka" processor to consume Kafka messages. Configure the processor with the following values:
 
-    ```
-    - Kafka Connection Service: Kafka3ConnectionService
-    - Group ID: nifi-CG-01
-    - Topic Name(s): demo-nyc-taxi-fare
-    - Processing Strategy: RECORD
-    - Value Record Reader: JsonTreeReader
-    - Record Value Writer: JsonRecordSetWriter
-    ```
+   ```
+   - Kafka Connection Service: Kafka3ConnectionService
+   - Group ID: nifi-CG-01
+   - Topic Name(s): demo-nyc-taxi-fare
+   - Processing Strategy: RECORD
+   - Value Record Reader: JsonTreeReader
+   - Record Value Writer: JsonRecordSetWriter
+   ```
 
 2. Configure "Kafka3ConnectionService" controller:
 
-    ```
-    - Bootstrap Servers: lab-kafka01:9092,lab-kafka02:9092
-    ```
+   ```
+   - Bootstrap Servers: lab-kafka01:19092,lab-kafka02:19092,lab-kafka03:19092
+   ```
 
 Enable the controller after configuration.
 
@@ -42,39 +42,39 @@ Enable the controller after configuration.
 
 - Click on the "Configuration" of the current process group, and click the "+" button next to "Parameter Context".
 
-    ```
-    - Name: lab-kafka-nifi
-    ```
+  ```
+  - Name: lab-kafka-nifi
+  ```
 
 - add a new parameter:
 
-    ```
-    - Name: avro.schema.nycdriver.raw
-    {
-        "type" : "record",
-        "name" : "nyc_taxi",
-        "fields" : [
-            { "name": "VendorID", "type": "string" },
-            { "name": "tpep_pickup_datetime", "type": "string" },
-            { "name": "tpep_dropoff_datetime", "type": "string" },
-            { "name": "passenger_count", "type": "string" },
-            { "name": "trip_distance", "type": "string" },
-            { "name": "RatecodeID", "type": "string" },
-            { "name": "store_and_fwd_flag", "type": "string" },
-            { "name": "PULocationID", "type": "string" },
-            { "name": "DOLocationID", "type": "string" },
-            { "name": "payment_type", "type": "string" },
-            { "name": "fare_amount", "type": "string" },
-            { "name": "extra", "type": "string" },
-            { "name": "mta_tax", "type": "string" },
-            { "name": "tip_amount", "type": "string" },
-            { "name": "tolls_amount", "type": "string" },
-            { "name": "improvement_surcharge", "type": "string" },
-            { "name": "total_amount", "type": "string" },
-            { "name": "congestion_surcharge", "type": "string" }
-        ]
-    }
-    ```
+  ```
+  - Name: avro.schema.nycdriver.raw
+  {
+      "type" : "record",
+      "name" : "nyc_taxi",
+      "fields" : [
+          { "name": "VendorID", "type": "string" },
+          { "name": "tpep_pickup_datetime", "type": "string" },
+          { "name": "tpep_dropoff_datetime", "type": "string" },
+          { "name": "passenger_count", "type": "string" },
+          { "name": "trip_distance", "type": "string" },
+          { "name": "RatecodeID", "type": "string" },
+          { "name": "store_and_fwd_flag", "type": "string" },
+          { "name": "PULocationID", "type": "string" },
+          { "name": "DOLocationID", "type": "string" },
+          { "name": "payment_type", "type": "string" },
+          { "name": "fare_amount", "type": "string" },
+          { "name": "extra", "type": "string" },
+          { "name": "mta_tax", "type": "string" },
+          { "name": "tip_amount", "type": "string" },
+          { "name": "tolls_amount", "type": "string" },
+          { "name": "improvement_surcharge", "type": "string" },
+          { "name": "total_amount", "type": "string" },
+          { "name": "congestion_surcharge", "type": "string" }
+      ]
+  }
+  ```
 
 4. Configure 2 Json controllers. Note that "Schema Access Strategy" should be "Use 'Schema Text' Property" and provide an avro schema for the controller. Enable 2 controllers after configuration.
 
@@ -103,15 +103,15 @@ Enable the controller after configuration.
 
 1. Run the `kafka_producer.py` Python script inside the container to simulate real-time data, and continusly produce messages to the Kafka topic.
 
-    ```bash
-    docker exec -it kafka-data-producer /bin/sh
-    # Inside the container:
-    python kafka_producer.py \
-        --brokers lab-kafka01:9092,lab-kafka02:9092 \
-        --topic demo-nyc-taxi-fare \
-        --csv data.csv \
-        --delay 1
-    ```
+   ```bash
+   docker exec -it lab-kafka-data-producer sh -c "
+     python kafka_producer.py \
+      --brokers lab-kafka01:19092,lab-kafka02:19092,lab-kafka03:19092 \
+      --topic demo-nyc-taxi-fare \
+      --csv data.csv \
+      --delay 1
+   "
+   ```
 
 2. Check for any errors in the NiFi UI.
 
