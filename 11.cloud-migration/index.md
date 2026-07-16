@@ -34,8 +34,14 @@
 
 ![Cloud service models](./assets/cloud-service-models.png)
 
-## Migration strategies (6 Rs)
+## Migration strategies (7 Rs)
 
+- **Relocate** (hypervisor-level lift and shift):
+    - move entire virtualization layer environment to the cloud at the hypervisor level (e.g. VMware Cloud on AWS)
+    - VMs are not converted to cloud-native instances, they are moved as-is, often with near-zero downtime
+    - same hypervisor, same management tools, same skills, same operations, only the physical location changes
+    - fastest bulk exit from a datacenter; even less change than rehost
+    - least cloud benefit: no elasticity, no managed services, often a stepping stone before replatform/refactor
 - **Rehost** (lift-and-shift):
     - create an image with virtualization service
     - export it
